@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #/ Author: Ricardo Veronese Ricci <ricci.vr@gmail.com>
-#/ Usage: folder-color.sh
+#/ Usage: numix-folder-color.sh
 #/ Usage: list available colors: numix-folder-color.sh -c
 #/ changes all the folders icons color to the one you set, current development for the numix icons only
 #/
