@@ -142,9 +142,14 @@ else
     # changing the folder style
     cp -rH files/"${style}"/Numix/* "${dir}"/Numix/
 
-    #find all files that starts with the selected color and copy them with another name to the default numix folder
-    find files/"${style}"/Numix/ -iname "${color}*" -type f -exec cp -f "{}" "${dir}"/Numix/ \;
-    
+    #find all files that starts with the selected color and force rename them 
+    find "${dir}"/Numix/ -iname "${color}*" -type f -exec rename -f 's/'"${color}"'-//' "{}" \; 
+   
+    #examples 
+    # find files/1/Numix/ -iname "yellow*" -type f -exec cp -f "{}" /home/ricci/dog/ \;
+    # cd /home/ricci/dog && rename 's/yellow-//' *
+
+    #checking if directories exist, if exist then change the default file manager icon to match current style
     chown -R "$cuser" "${dir}"/Numix/
     if [ -d "${dir}"/Numix-Circle/ ]; then
         cp -rH files/"${style}"/Numix-Circle/* "${dir}"/Numix-Circle/
