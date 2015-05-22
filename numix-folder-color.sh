@@ -137,10 +137,14 @@ if [ -z "$color" ]; then
         "\rRun '$(basename -- $0) --color' for an option list"
     gerror 
 else 
-    echo "here the magic happens"
+    echo "wait..."
 
     # changing the folder style
     cp -rH files/"${style}"/Numix/* "${dir}"/Numix/
+
+    #find all files that starts with the selected color and move them with another name to the default numix folder
+    find files/"${style}"/Numix/ -iname "${color}*" -type f -exec cp "{}" /home/ricci/dog/ \;
+    
     chown -R "$cuser" "${dir}"/Numix/
     if [ -d "${dir}"/Numix-Circle/ ]; then
         cp -rH files/"${style}"/Numix-Circle/* "${dir}"/Numix-Circle/
