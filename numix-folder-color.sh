@@ -39,16 +39,16 @@ else
             echo -e \
                 "This is a list of currently supported folder\n" \
                 "\rcolors that can be used to replace the default.\n\n" \
-                "\r1)  default  - reverts any previous colour change\n" \
-                "\r2)  blue     - 42a5f5\n" \
-                "\r3)  brown    - 8d6e63\n" \
-                "\r4)  green    - 66bb6a\n" \
-                "\r5)  grey     - bdbdbd\n" \
-                "\r6)  orange   - f57c00\n" \
-                "\r7)  pink     - f06292\n" \
-                "\r8)  purple   - 7e57c2\n" \
-                "\r9)  red      - ef5350\n" \
-                "\r10) yellow   - ffca28\n"
+                "\r0 - default - reverts any previous colour change\n" \
+                "\r1 - blue    - 42a5f5\n" \
+                "\r2 - brown   - 8d6e63\n" \
+                "\r3 - green   - 66bb6a\n" \
+                "\r4 - grey    - bdbdbd\n" \
+                "\r5 - orange  - f57c00\n" \
+                "\r6 - pink    - f06292\n" \
+                "\r7 - purple  - 7e57c2\n" \
+                "\r8 - red     - ef5350\n" \
+                "\r9 - yellow  - ffca28\n"
             sucess ;;
         -h|--help)
             echo -e \
@@ -98,7 +98,7 @@ fi
 
 # folder style stdin
 read -p "Which folder style do you want? type the style list number " answer
-if [ -d files/"$answer" ] then
+if [ -d files/"$answer" ]; then
     style="$answer"
 else
     echo -e \
@@ -109,16 +109,16 @@ fi
 
 declare -A colors
 colors=(
-    [1]=default 
-    [2]=blue
-    [3]=brown 
-    [4]=green
-    [5]=grey 
-    [6]=orange
-    [7]=pink 
-    [8]=purple
-    [9]=red 
-    [10]=yellow
+    [0]=default 
+    [1]=blue
+    [2]=brown 
+    [3]=green
+    [4]=grey 
+    [5]=orange
+    [6]=pink 
+    [7]=purple
+    [8]=red 
+    [9]=yellow
     )
 
 # folder color stdin
@@ -130,7 +130,7 @@ do
     fi
 done
 
-# check if style variable is unset
+# check if color variable is unset
 if [ -z "$color" ]; then 
     echo -e \
         "You've chosen an invalid color number.\n" \
@@ -138,20 +138,23 @@ if [ -z "$color" ]; then
     gerror 
 else 
     echo "here the magic happens"
+
+    # changing the folder style
+    cp -rH files/"${style}"/Numix/* "${dir}"/Numix/
+    chown -R "$cuser" "${dir}"/Numix/
+    if [ -d "${dir}"/Numix-Circle/ ]; then
+        cp -rH files/"${style}"/Numix-Circle/* "${dir}"/Numix-Circle/
+        chown -R "$cuser" "${dir}"/Numix-Circle/
+    fi
+    if [ -d "${dir}"/Numix-Square/ ]; then
+        cp -rH files/"${style}"/Numix-Square/* "${dir}"/Numix-Square/
+        chown -R "$cuser" "${dir}"/Numix-Square/
+    fi
+
+    echo "Folder style and color change complete!"
+    
+    #exiting
+    sucess
 fi
 
 
-# renaming folders to become the default ones
-# cp -rH files/"${style}"/Numix/* "${dir}"/Numix/
-# chown -R "$cuser" "${dir}"/Numix/
-# if [ -d "${dir}"/Numix-Circle/ ]; then
-#     cp -rH files/"${style}"/Numix-Circle/* "${dir}"/Numix-Circle/
-#     chown -R "$cuser" "${dir}"/Numix-Circle/
-# fi
-# if [ -d "${dir}"/Numix-Square/ ]; then
-#     cp -rH files/"${style}"/Numix-Square/* "${dir}"/Numix-Square/
-#     chown -R "$cuser" "${dir}"/Numix-Square/
-# fi
-
-# echo "Folder color change complete!"
-# sucess
